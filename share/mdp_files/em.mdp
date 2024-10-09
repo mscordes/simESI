@@ -1,0 +1,15 @@
+DispCorr = no
+coulombtype = cut-off
+cutoffscheme = Verlet
+emstep = 0.01
+emtol = 0.01
+integrator = steep
+nsteps = 5000
+nstlist = 10
+nstxout = 0
+pbc = xyz
+rcoulomb = 10.0
+rlist = 10.0
+rvdw = 10.0
+rvdwswitch = 10.0
+vdwtype = cut-off

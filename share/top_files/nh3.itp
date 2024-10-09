@@ -1,0 +1,23 @@
+[ moleculetype ]
+; Name            nrexcl
+NXX               3
+
+[ atoms ]
+;   nr       type  resnr residue  atom   cgnr     charge       mass  typeB    chargeB      massB
+; residue   1 AMM1 rtp AMM1 q  0.0
+     1      NG331      1   NXX     N1      1     -1.125     14.007
+     2     HGPAM3      1   NXX    H11      1      0.375      1.008
+     3     HGPAM3      1   NXX    H12      1      0.375      1.008
+     4     HGPAM3      1   NXX    H13      1      0.375      1.008   ; qtot 0
+
+[ bonds ]
+;  ai    aj funct            c0            c1            c2            c3
+    1     2     1 
+    1     3     1 
+    1     4     1 
+
+[ angles ]
+;  ai    aj    ak funct            c0            c1            c2            c3
+    2     1     3     5 
+    2     1     4     5 
+    3     1     4     5 

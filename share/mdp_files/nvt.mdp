@@ -1,0 +1,47 @@
+; simESI NVT Equilibriation MD Parameters File
+; This file is optimized for simulating electrosprayed droplets under
+; ambient conditions. 
+;
+; When noted, select parameters were adopted from  Hanifi, Scrosati & Konermann, J. Phys. Chem. B (2024) 
+; If using please cite Hanifi et al. as well as..
+;   Cordes, M. S.; Gallagher, E. S. Molecular Dynamics Simulations of Native Protein Ion Formation from Electrosprayed 
+;   Droplets with Experimentally Relevant Compo-sition. Manuscript pending review.
+
+; General 
+dt                      = 0.002     ; 0.002 fs timstep
+nsteps                  = 10000     ; 0.002 fs * 50000 steps = 100 ps
+integrator              = md
+comm_grps               = Protein   ; This variable is actively modified during a simESI run to seperate droplet/atmosphere.
+comm_mode               = Angular   ; Remove linear/rotational motion. Atmosphere will induce rotation!
+DispCorr                = no         
+constraint_algorithm    = lincs     ; LINCS constraint algo
+constraints             = h-bonds   ; Only constrain H-bonds
+lincs_iter              = 1
+lincs_order             = 4
+nstenergy               = 100      
+nstlog                  = 100       
+nstvout                 = 100
+nstxout                 = 100
+nstxout_compressed      = 100      
+
+; Pseudo-PBC, see Hanifi et al. 
+pbc                     = xyz
+cutoffscheme            = Verlet
+nstlist                 = 40
+rlist                   = 15        ; Smaller 15 nm value enabled by simESI recentering.
+rcoulomb                = 15        ; Smaller 15 nm value enabled by simESI recentering.
+rvdw                    = 15        ; Smaller 15 nm value enabled by simESI recentering.
+coulombtype             = cut-off
+vdwtype                 = cut-off
+
+; T-coupling
+gen_vel                 = yes       ; Generate random initial velocities.
+gen_seed                = -1        ; Random seed.
+gen_temp                = 370       ; Temperature to seed from in K.          
+continuation            = no        ; Since equilibriating and generating velocities.
+pcoupl                  = no        ; Use NVT ensemble.
+tcoupl                  = nose-hoover
+tc_grps                 = Protein   ; This variable is actively modified during a simESI run to seperately couple protein/solvent/atmosphere similar to Hanifi et al.
+ref_t                   = 370       ; Also actively modified. Droplet components set to user defined temp, gas held at constant 300 K.
+tau_t                   = 0.1         
+nsttcouple              = 1         ; Temperature coupling frequency.

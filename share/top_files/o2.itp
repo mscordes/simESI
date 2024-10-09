@@ -1,0 +1,12 @@
+[moleculetype]
+; name nrexcl
+OOO  1
+
+[atoms]
+; id    at type     res nr  residu name at name  cg nr  charge   mass
+1      OOO1         1       OOO          O1       1       0.00
+2      OOO2         1       OOO          O2       1       0.00
+
+[ bonds ]
+;i  j   funct   length   force c
+1   2   1       0.12074  6863

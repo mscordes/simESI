@@ -1,0 +1,9 @@
+#include "charmm36.ff/forcefield.itp"
+#include "hydronium.itp"
+#include "hydroxide.itp"
+#include "tip4p_2005.itp"
+
+[system]
+Droplet with no analyte
+
+[molecules]

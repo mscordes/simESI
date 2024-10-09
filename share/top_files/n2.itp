@@ -1,0 +1,12 @@
+[moleculetype]
+; name nrexcl
+NNN  1
+
+[atoms]
+; id    at type     res nr  residu name at name  cg nr  charge   mass
+1      NNN1         1       NNN          N1       1       0.00
+2      NNN2         1       NNN          N2       1       0.00
+
+[ bonds ]
+;i  j   funct   length   force c
+1   2   1       0.10977   13347
