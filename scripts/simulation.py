@@ -45,7 +45,7 @@ def run_simulation(data_dir, args, pka_vals, top_order):
     prot_charge = find_protCharge(proteins)
 
     # Calculate --water_cutoff based on protein mass, for ubiquitin (8.6 kDa) this is 30
-    mass = sum(atom_masses[atom.element] for atom in system.atoms)
+    mass = sum(atom_masses[atom.element] for atom in system.protein_atoms)
     args.water_cutoff = args.water_cutoff if args.water_cutoff != -1 else round(mass*0.0035)
 
     # Write initial data
