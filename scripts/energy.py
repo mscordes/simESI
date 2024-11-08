@@ -33,6 +33,23 @@ residue_PA = {  'HIS'  :  953.70,
                 'NXH'  :  853.54, 
                 }
 
+"""Residue gas phase entropy derived from 
+J. B. Klauda et al. The Journal of Physical Chemistry B 2010 Vol. 114 Issue 23 Pages 7830-7843"""
+residue_S = {'HIS' : 0.0605, 
+             'LYS' : 0.113, 
+             'ARG' : 0.0629, 
+             'GLU' : 0.0949, 
+             'ASP' : 0.0809, 
+             'SOL' : 0.0921, 
+             'HHO' : 0.1018, 
+             'NTER': 0.1203, 
+             'CTER': 0.0787, 
+             'ATX' : 0.0809, 
+             'AHX' : 0.0809, 
+             'NXX' : 0.1158, 
+             'NXH' : 0.1158
+             }
+
 def find_pkPotential(donor, acceptor, near_waters, cluster_ph, protein_resnames, pka_vals, nonProt_pka, temperature, residue_PA):
     """Computes the Delta E of a specific exchange considering the pKa of the donor and acceptor, 
     corrected to account for changes in gas phase proton affinity if waters < 30.
@@ -79,42 +96,47 @@ def find_pkPotential(donor, acceptor, near_waters, cluster_ph, protein_resnames,
     
     # If <30 near waters, need gas phase correction
     else:
+
+        # Derive GPB from system tempertaure, gas phase PA, and derived entropy terms
+        def get_GPB(res_name):
+            return residue_PA[res_name] + (temperature*residue_S[res_name])
+
         # Set gpa
         if donor.atom.res_name in ['HHO', 'SOL']:
             # Residue gpa
             if donor.atom.res_name == 'HHO':
-                gpa_val = residue_PA['HHO']
+                d_gpb = get_GPB('HHO')
             elif donor.atom.res_name == 'SOL':
-                gpa_val = residue_PA['SOL']
+                d_gpb = get_GPB('SOL')
         else:
             # Residue gpa, but termini have to be treated specially
             if donor.atom.atom_name in ['H1', 'H2', 'H3']:
-                gpa_val = residue_PA['NTER'] 
+                d_gpb = get_GPB('NTER') 
             elif donor.atom.atom_name == 'HT2':
-                gpa_val = residue_PA['CTER']
+                d_gpb = get_GPB('CTER')
             else:
-                gpa_val = residue_PA[donor.atom.res_name]                  
+                d_gpb = get_GPB(donor.atom.res_name)                  
 
         # Set gpb
         if acceptor.atom.res_name in ['OHX', 'SOL']:
             if acceptor.atom.res_name == 'OHX':
-                gpb_val = residue_PA['SOL']
+                a_gpb = get_GPB('SOL')
             elif acceptor.atom.res_name == 'SOL':
-                gpb_val = residue_PA['HHO']
+                a_gpb = get_GPB('HHO')
         else:
             if acceptor.atom.atom_name == 'N':
-                gpb_val = residue_PA['NTER']
+                a_gpb = get_GPB('NTER')
             elif acceptor.atom.atom_name in ['OT1', 'OT2']:
-                gpb_val = residue_PA['CTER']
+                a_gpb = get_GPB('CTER')
             else:
-                gpb_val = residue_PA[acceptor.atom.res_name]
+                a_gpb = get_GPB(acceptor.atom.res_name)
 
         """Employ logarithmic decay from pure gas phase proton affinities to normal pka at 30 waters
         Exponential factor fitted from A. Kumar et al. Physical Chemistry Chemical Physics 2022 Vol. 24 Issue 30 Pages 18236-18244"""
         def GP_correct(gp_val, sp_val, near_waters):
             sol_pot = 0.019144*sp_val*temperature
             return ((gp_val-sol_pot)*np.exp(-0.30312*near_waters)) + sol_pot
-        return GP_correct(gpa_val, pka_val, near_waters) - GP_correct(gpb_val, pkb_val, near_waters)
+        return GP_correct(d_gpb, pka_val, near_waters) - GP_correct(a_gpb, pkb_val, near_waters)
 
 
 def find_ES_pot(system, donor, acceptor, exchanged_charge):

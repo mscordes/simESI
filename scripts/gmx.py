@@ -96,7 +96,7 @@ def modify_ndx_grps(coord_name, ndx_name, num_molecs, args):
     auto_gmx_input(f'gmx make_ndx -f {coord_name}.gro -o {ndx_name}.ndx', commands, args)
     
 
-def modify_tc_grps(mdp, new_temp, num_molecs, args, nvt):
+def modify_tc_grps(mdp, new_temp, num_molecs, args):
     """In simESI, gas set at 300K, but everything else can be set at any user defined temp. This func
     sets correct droplet and atmosphere temp and corrects tc-grps in the .mdp file which enable temp differences. Also, 
     because we use tc-grps for every type of molecule in system, have to modify tc-grps based on what is (or
@@ -108,7 +108,6 @@ def modify_tc_grps(mdp, new_temp, num_molecs, args, nvt):
         num_molecs (dict): Dict with keys as residue names, and values corresponding to the number of 
                     that residue present in the simulation.
         args: Argparse object of user defined args.
-        nvt (bool): If doing NVT equil, need smaller tau-t's.
 
     Outputs:
         Corrected .mdp file.
@@ -116,10 +115,7 @@ def modify_tc_grps(mdp, new_temp, num_molecs, args, nvt):
     tc_grps_str = 'Protein '
     comm_grps_str = 'Protein_'
     ref_t_str = f'{new_temp} '
-    if not nvt:
-        tau_t_str = '100 '
-    else:
-        tau_t_str = '5 '
+    tau_t_str = '100 '
 
     new_tc_grps = ''
     for molec in ['SOL', 'HHO', 'OHX', 'ATX', 'AHX', 'NXX', 'NXH']:

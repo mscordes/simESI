@@ -145,8 +145,8 @@ def run_simulation(data_dir, args, pka_vals, top_order):
         end_time_exchange = timer()
 
         # Prep mdp file for MD, tc-grps will break unless the specified residue name is present
-        modify_tc_grps('prodrun.mdp', temperature[step], system.num_molecs, args, False)
-
+        modify_tc_grps('prodrun.mdp', temperature[step], system.num_molecs, args)
+        
         # Start MD
         if exchanges or recenter or gas_correct or evap or step == args.step or step%50 == 0:
             # Run file

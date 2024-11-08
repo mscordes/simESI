@@ -53,8 +53,8 @@ def get_pkaVals(args):
 
 def equilibriate(args):
     """
-    Cleans up inputted protein .pdb, forms droplet via droplet_formation() above, and then 
-    equilibriate with energy minimization followed by NVT. Also gets pKa values. 
+    Cleans up inputted protein .pdb, forms droplet and then equilibriatse with 
+    energy minimization followed by NVT. Also gets pKa values. 
 
     Args:
         args: argparse object of user defined args.  
@@ -131,7 +131,7 @@ def equilibriate(args):
         print('Energy minimization completed.')
 
         # tc-grps in nvt.mdp will break unless the specified residue name is present
-        modify_tc_grps('nvt.mdp', args.init_temp, num_molecs, args, True)
+        modify_tc_grps('nvt.mdp', args.init_temp, num_molecs, args)
 
         # NVT equilibriation
         print('Starting NVT equilibriation.')

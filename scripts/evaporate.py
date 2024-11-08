@@ -62,7 +62,7 @@ def remove_evaporated(system, args):
         return atoms_toDelete, num_molecs
 
     # Delete evaporated ions
-    cutoff = 12.5 # This works for smallish proteins, but will need to be increased for larger
+    cutoff = 10.0 # This works for smallish proteins, but will need to be increased for larger
     for res in ['HHO', 'OHX', 'ATX', 'AHX', 'NXX', 'NXH']:
         atoms_toDelete, system.num_molecs = find_evap(res, com, cutoff, system.res_dict, system.num_molecs)
 

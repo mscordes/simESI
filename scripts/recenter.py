@@ -77,7 +77,8 @@ def reset_gasVelocities(system, gas_correct):
     (i,e., moving incredibly fast) while all other molecules are essentially
     frozen. Correct here by determining how close the actual velocity distr.
     is compared to expected. If distorted, gas velocities are reseeded to conform
-    to an expected distribution. This is equivalent to gen_vel = yes in .mdp params.
+    to an expected distribution. This is equivalent to gen_vel = yes in .mdp params,
+    that is specifically applied to only atmospheric molecules.
 
     Args:
         system: System class object.
