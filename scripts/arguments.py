@@ -22,10 +22,11 @@ def get_args():
                         help='Simulate positive-ion mode ("pos") or negative-ion mode ("neg"). Default of "pos".')
 
     parser.add_argument('--amace_conc', type=float, default=0.25, \
-                        help='(Float) If "amace" selected for ion_seeding, chooses initial ammonium acetate concentration. Default of 0.25.')
+                        help='(Float) If "amace" selected for ion_seeding, chooses initial ammonium acetate concentration in M. Default of 0.25.')
 
     parser.add_argument('--droplet_size', type=float, default=None, 
-                        help='(Float) Radius of droplet in nm. Defaults to 1.8x protein radius (assuming 1.22 g/cm^3 protein density).')
+                        help='(Float) Radius of droplet in nm. Defaults to 1.8x protein radius (assuming 1.22 g/cm^3 protein density).' + 
+                        'For ubiquitin this leads to ~2.5 nm radius droplets.')
 
     parser.add_argument('--end', type=str, choices=['desolvated', 'cutoff'], default='desolvated', \
                         help='Choose when to end the simulation, options are "desolvated" which ends simulation if number of waters == 0 or ' +
@@ -53,8 +54,8 @@ def get_args():
                         'proteins larger than ubiquitin.')
 
     parser.add_argument('--hpc', type=str, choices=['yes', 'no'], default='no', \
-                        help='Options for using (my) HPC cluster. Assumes 1 node with 18 ranks and GPU acceleration. If pulling ' +
-                        'different resources, modify the gmx command in line 18 in gmx.py and line 182 in simulation.py.')
+                        help='Options for using (my) HPC cluster. Assumes 1 node with GPU acceleration. If pulling ' +
+                        'different resources, modify the gmx command in line 18 in gmx.py and line 184 in simulation.py.')
 
     parser.add_argument('--verbose', type=str, choices=['yes', 'no'], default='no', \
                         help='Chooses whether or not to hide gmx outputs in terminal.')
