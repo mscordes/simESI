@@ -218,10 +218,18 @@ def unpack_pdb(pdb_file):
     box_vectors = None
     with open(pdb_file) as f:
         pdb = f.readlines()
+
+        # Get box vectors if avai
         for line in pdb:
             if line[0:6] == 'CRYST1':
                 box_vectors = [float(vector)/10.0 for index, vector in enumerate(line.split()) if index in [1,2,3]]
                 break
+
+            # No box vector info, so just assume 50 nm^3 box  
+            elif 'ATOM' == line[0:4]:
+                box_vectors = [50.0, 50.0, 50.0]
+                break
+
         residue = None
         current_res = None
         current_protein = Protein()
