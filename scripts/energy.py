@@ -107,6 +107,7 @@ def find_pkPotential(donor, acceptor, near_waters, cluster_ph, protein_resnames,
             if donor.atom.res_name == 'HHO':
                 d_gpb = get_GPB('HHO')
             elif donor.atom.res_name == 'SOL':
+                near_waters -= 1 #Don't count reactant water in n
                 d_gpb = get_GPB('SOL')
         else:
             # Residue gpa, but termini have to be treated specially
@@ -122,6 +123,7 @@ def find_pkPotential(donor, acceptor, near_waters, cluster_ph, protein_resnames,
             if acceptor.atom.res_name == 'OHX':
                 a_gpb = get_GPB('SOL')
             elif acceptor.atom.res_name == 'SOL':
+                near_waters -= 1 #Don't count reactant water in n
                 a_gpb = get_GPB('HHO')
         else:
             if acceptor.atom.atom_name == 'N':
