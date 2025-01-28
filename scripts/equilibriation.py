@@ -3,6 +3,7 @@ Droplet equilibriation and get pKa values.
 """
 import subprocess
 import os
+import re
 from coordinates import unpack_pdb, write_pdb, set_protonMap, unpack_gro, write_top
 from gmx import auto_gmx_input, call_mdrun, modify_tc_grps, modify_ndx_grps
 from droplet_formation import form_droplet
@@ -28,6 +29,12 @@ def get_pkaVals(args):
                 try:
                     res.append(int(line[1])-1)
                     pka.append(float(line[3]))
+                except ValueError:
+                    pass
+            if len(line) == 4:
+                try:
+                    res.append(int(re.sub(r'\D', '', line[0]))-1)
+                    pka.append(float(line[2]))
                 except ValueError:
                     pass
         return dict(zip(res, pka))

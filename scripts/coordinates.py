@@ -532,10 +532,12 @@ def set_protonMap(res_dict, proteins, pka_vals):
                 try:
                     prob = 1.0/(1+(10**(7.0-pka_vals[residue.res_num])))
                     prot_state = random.choices([1, 0], weights=(prob, 1-prob), k=1)[0]
-                except ValueError:
+                except KeyError:
                     print("\n\n\nERROR: PROPKA .pka file was generated, but is likely missing a residue."
                         "A common issue is that the C-termini for each monomer must have both oxygens, and the "
                         "final oxygen must have the atom name 'OXT'not 'OT1' or 'OT2'.")
+                    print("\nProblem residue was")
+                    print(residue)
                     exit(1)
 
                 # Update proton map
