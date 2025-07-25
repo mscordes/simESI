@@ -79,7 +79,9 @@ def update_pos_resDict_numMolecs(atoms):
         residue.add_atom(atom)
         current_protein.add_atom(atom)
         if atom.atom_name in ['OXT', 'OT2', 'HT2']:
-            if atom.atom_name == 'OT2':
+            if atom.atom_name == 'HT2' and atom.res_name == 'GLY' and atoms[index-1].atom_name == 'HT1':
+                prot_switch = False # Deprot GLY N-term also has HT2 which we need to ignore
+            elif atom.atom_name == 'OT2':
                 try:
                     if atoms[index+1].atom_name == 'HT2':
                         pass

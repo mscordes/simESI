@@ -93,7 +93,9 @@ def unpack_gro(gro_file):
             current_protein.add_atom(atom)
 
             if atom.atom_name in ['OXT', 'OT2', 'HT2']:
-                if atom.atom_name == 'OT2':
+                if atom.atom_name == 'HT2' and atom.res_name == 'GLY' and gro[2:-1][index-1].find('HT1') != -1:
+                    prot_switch = False # Deprot GLY N-term also has HT2 which we need to ignore
+                elif atom.atom_name == 'OT2':
                     try:
                         if gro[2:-1][index+1].find('HT2') != -1:
                             pass
