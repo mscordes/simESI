@@ -4,9 +4,7 @@ simESI (simulations of ESI) is a package of scripts written in entirely in pytho
 
 If using simESI, please cite the following paper.
 
-Cordes, M.S.; Gallagher, E.S. Molecular Dynamics Simulations of Native Protein Charging in Electrosprayed Droplets with Experimentally Relevant Compositions. 2025. *Manuscript under review.* 
-doi: https://doi.org/10.26434/chemrxiv-2024-smnj3
-
+Cordes, M. S. & Gallagher, E. S. Molecular Dynamics Simulations of Native Protein Charging in Electrosprayed Droplets with Experimentally Relevant Compositions. J. Am. Chem. Soc. 147, 15066-15076 (2025). https://doi.org/10.1021/jacs.4c17382
 
 ## Dependencies
 * ```python >= 3.9```
