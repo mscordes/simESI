@@ -154,6 +154,10 @@ def create_protH(residue, hydrogen, atoms, hydrogens_toAdd, hydrogen_coord, nter
        hydrogens_toAdd (list): Post exchange, updated list. 
     """
     if residue.res_id in nterm_resIDs and residue.atom_name == 'N':
+        # GLY N-term changes names of terminal H's when switching prot states
+        if residue.res_name == 'GLY':
+            atoms[residue.atom_num+1].atom_name = 'H1'
+            atoms[residue.atom_num+2].atom_name = 'H2'
         atom_name = new_HNames[residue.res_id]            
     elif residue.res_id in cterm_resIDs and residue.atom_name in ['OT1', 'OT2']:
         atom_name = new_HNames[residue.res_id]                
